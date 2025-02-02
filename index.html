@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -19,6 +20,7 @@
             grid-template-columns: repeat(20, 20px);
             grid-template-rows: repeat(20, 20px);
             gap: 1px;
+            margin-bottom: 20px;
         }
         .cell {
             width: 20px;
@@ -32,10 +34,47 @@
         .food {
             background-color: red;
         }
+        #controls {
+            display: grid;
+            grid-template-areas:
+                ". up ."
+                "left down right";
+            gap: 10px;
+        }
+        #controls button {
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #controls button:hover {
+            background-color: #45a049;
+        }
+        #up {
+            grid-area: up;
+        }
+        #left {
+            grid-area: left;
+        }
+        #down {
+            grid-area: down;
+        }
+        #right {
+            grid-area: right;
+        }
     </style>
 </head>
 <body>
     <div id="game"></div>
+    <div id="controls">
+        <button id="up">⬆️</button>
+        <button id="left">⬅️</button>
+        <button id="down">⬇️</button>
+        <button id="right">➡️</button>
+    </div>
     <script>
         const game = document.getElementById('game');
         const gridSize = 20;
@@ -100,11 +139,18 @@
             food = { x: 5, y: 5 };
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp' && direction !== 'down') direction = 'up';
-            if (e.key === 'ArrowDown' && direction !== 'up') direction = 'down';
-            if (e.key === 'ArrowLeft' && direction !== 'right') direction = 'left';
-            if (e.key === 'ArrowRight' && direction !== 'left') direction = 'right';
+        // Обработчики для кнопок
+        document.getElementById('up').addEventListener('click', () => {
+            if (direction !== 'down') direction = 'up';
+        });
+        document.getElementById('left').addEventListener('click', () => {
+            if (direction !== 'right') direction = 'left';
+        });
+        document.getElementById('down').addEventListener('click', () => {
+            if (direction !== 'up') direction = 'down';
+        });
+        document.getElementById('right').addEventListener('click', () => {
+            if (direction !== 'left') direction = 'right';
         });
 
         createGame();
